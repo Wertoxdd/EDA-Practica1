@@ -1,19 +1,32 @@
 package org.eda.packpractica1;
 
-public class Actor implements Comparable<Actor>{
-	private String nombreCompleto;
+import java.util.Objects;
+import java.util.ArrayList;
+
+public class Actor {
+	private String nombre;
+	private String apellido;
+	private int id;
+	private ArrayList<Pelicula> peliculas;
 	
-	public Actor(String nombre) {
-		this.nombreCompleto = nombre;
+	public Actor(String nombre, String apellido, int id) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.id = id;
+		this.peliculas = new ArrayList<Pelicula>();
 	}
 	
-	public String getNombreCompleto() {
-		return this.nombreCompleto;
+	public String getNombre() {
+		return this.nombre;
+	}
+	
+	public String getApellido() {
+		
 	}
 	
 	@Override
 	public String toString() {
-		return "Nombre: " + this.nombreCompleto;
+		return "Nombre: " + this.nombre + " - Apellido: " + this.apellido + " - ID: " + this.id;
 	}
 	
 	@Override
@@ -23,13 +36,13 @@ public class Actor implements Comparable<Actor>{
 		else if (getClass() != obj.getClass()) return false; // comprueba si ambos pertenecen a la misma clase
 		else {
 			Actor actor = (Actor) obj; // hace casting al parametro de tipo Object
-			return this.nombreCompleto.equals(actor.nombreCompleto); // una vez hecho el casting comprueba si tienen el mismo nombre
+			return this.id==actor.id; // una vez hecho el casting comprueba si tienen el mismo nombre
 		}
 	}
 	
 	@Override
 	public int hashCode() {
-		return java.util.Objects.hash(this.nombreCompleto); // se podria usar "return this.nomnbreCompleto.hashCode()" (polimorfismo)
+		return Objects.hash(this.id);
 	}
 	
 }
