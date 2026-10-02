@@ -11,7 +11,7 @@ public class ListaActores {
 	
 	// metodo TODO: borrar actor
 	public void anadirActor(Actor actor) {
-		
+		mapaActores.put(Actor.id)
 	}
 	
 }
