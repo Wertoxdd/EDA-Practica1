@@ -9,5 +9,9 @@ public class ListaActores {
 		this.mapaActores = new HashMap<String, Actor>();
 	}
 	
+	// metodo TODO: borrar actor
+	public void anadirActor(Actor actor) {
+		
+	}
 	
 }
