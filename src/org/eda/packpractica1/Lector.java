@@ -23,7 +23,7 @@ public class Lector {
 	}
 	
 	public String leerString(String mensaje) {
-		System.out.println(mensaje);
+		System.out.print(mensaje);
 		return sc.nextLine();
 	}
 }
