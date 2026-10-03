@@ -1,16 +1,10 @@
 package org.eda.packpractica1;
 
-import java.util.Scanner; // elegir por consola el 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.util.Scanner;
 
 public class Menu {
 	private static Menu instanciaMenu = null;
-	
-	private Menu() {}
-	
+
 	public static Menu getMenu() {
 		if(instanciaMenu == null) {
 			instanciaMenu = new Menu();
@@ -39,6 +33,13 @@ public class Menu {
 		System.out.println();
 	}
 	
+	public void pausa() {
+		Scanner sc = new Scanner(System.in);
+		Menu.getMenu().mensajeCargando("Pulsa Enter para continuar");
+		sc.nextLine();
+		sc.close();
+	}
+
 	private void menuInteractivo() {		
 		System.out.println("------------------------------ Menú ------------------------------");
 		System.out.println("|                                                                |");
@@ -57,6 +58,8 @@ public class Menu {
 		
 		
 	}
+	
+
 	
 	/*
 	public void iniciarBarra(String nombreFichero) {

@@ -2,6 +2,7 @@ package org.eda.packpractica1;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.io.PrintWriter;
 
 // FALTA MANEJAR LOS ACTORES CON LAS PELICULAS
 
@@ -85,7 +86,17 @@ public class ListaActores {
 		return true;
 	}
 	
-	
+	public void escribirEnDirectorioCon(PrintWriter editor){
+		for (ArrayList<Actor> actores: mapaActores.values()){
+			for (Actor a: actores){
+				editor.println(a);
+				for (Pelicula p: a.getPeliculas()){
+					editor.println("\t" + p);
+				}
+			}
+		}
+	}
+
 	public ArrayList<Actor>[] obtenerListaOrdenada(){
 		ArrayList<Actor>[] temp = new ArrayList [mapaActores.size()];
 		ArrayList<Actor>[] valores = new ArrayList [temp.length];

@@ -33,6 +33,10 @@ public class Pelicula {
 		return this.id;
 	}
 	
+	public boolean tieneMismoId(int id){
+		return this.id == id;
+	}
+
 	/*
 	 * Pos: devuelve una copia de la lista de actores en la que participa, asi no es modificable el atributo
 	 */

@@ -2,6 +2,8 @@ package org.eda.packpractica1;
 
 import java.util.Scanner;
 
+
+
 public class Lector {
 	private static Lector miLector = null;
 	private Scanner sc;
@@ -25,10 +27,5 @@ public class Lector {
 	public String leerString(String mensaje) {
 		System.out.println(mensaje);
 		return sc.nextLine();
-	}
-	
-	public void pausa() {
-		Menu.getMenu().mensajeCargando("Pulsa Enter para continuar");
-		sc.nextLine();
 	}
 }

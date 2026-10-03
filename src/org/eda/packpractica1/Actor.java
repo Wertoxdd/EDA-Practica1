@@ -25,7 +25,11 @@ public class Actor implements Comparable<Actor>{
 	public int getId() {
 		return this.id;
 	}
-	
+
+	public boolean tieneMismoId(int id){
+		return this.id == id;
+	}	
+
 	public void eliminarPelicula(Pelicula pelicula) {
 		this.peliculas.remove(pelicula);
 	}
