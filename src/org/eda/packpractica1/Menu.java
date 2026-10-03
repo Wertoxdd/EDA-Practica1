@@ -39,8 +39,7 @@ public class Menu {
 		System.out.println();
 	}
 	
-	private void menuInteractivo() {
-		Scanner sc = new Scanner(System.in);
+	private void menuInteractivo() {		
 		System.out.println("------------------------------ Menú ------------------------------");
 		System.out.println("|                                                                |");
 		System.out.println("|                                                                |");
@@ -51,6 +50,11 @@ public class Menu {
 		System.out.println("|                                                                |");
 		System.out.println("|                                                                |");
 		System.out.println("------------------------------------------------------------------");
+		
+		
+		Lector.getLector().pausa();
+		
+		
 		
 	}
 	
