@@ -4,7 +4,7 @@ public class Main {
 	public static void main(String[] args) {
 		try{
 			Menu.getMenu().menu();
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			System.out.println("Error: " + e);
 		}
 	}
