@@ -75,7 +75,7 @@ public class ListaActores {
 	/*
 	 * Pos:
 	 */
-	public boolean anadirActor(Actor actor) {
+	public boolean añadirActor(Actor actor) {
 		if (obtenerActor(actor) != null) return false;
 		ArrayList<Actor> listaActoresMismoNombre = obtenerActoresPorNombre(actor.getNombre());
 		if (listaActoresMismoNombre == null) {

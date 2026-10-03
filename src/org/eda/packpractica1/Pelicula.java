@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Pelicula {
-	// anio = a�o (eclipse suele dar errores con los caracteres especiales)
 	private String titulo;
-	private int anio;
+	private int año;
 	private int id; 
 	private ArrayList<Actor> actores;
 	
-	public Pelicula(String titulo, int anio, int id) {
+	public Pelicula(String titulo, int año, int id) {
 		this.titulo = titulo;
-		this.anio = anio;
+		this.año = año;
 		this.id = id;
 		this.actores = new ArrayList<Actor>();
 	}
@@ -21,12 +20,12 @@ public class Pelicula {
 		return this.titulo;
 	}
 	
-	public int getAnio(){
-		return this.anio;
+	public int getAño(){
+		return this.año;
 	}
 	
-	public void setAnio(int nuevoAnio) {
-		this.anio = nuevoAnio;
+	public void setAño(int nuevoAño) {
+		this.año = nuevoAño;
 	}
 	
 	public int getId() {
@@ -44,7 +43,7 @@ public class Pelicula {
 		return new ArrayList<Actor>(this.actores);
 	}
 	
-	public boolean anadirActor(Actor actor) {
+	public boolean añadirActor(Actor actor) {
 		if (!this.actores.contains(actor)) {
 			this.actores.add(actor); 
 			return true;
@@ -81,7 +80,7 @@ public class Pelicula {
 	
 	@Override
 	public String toString() {
-		return "ID: " + this.id + ", nombre: " + this.titulo + ", anio: " + this.anio;
+		return "ID: " + this.id + ", nombre: " + this.titulo + ", año: " + this.año;
 	}
 	
 	

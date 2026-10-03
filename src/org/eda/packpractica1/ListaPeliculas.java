@@ -22,7 +22,7 @@ public class ListaPeliculas {
 		return mapaPeliculas.get(titulo);
 	}
 	
-	public boolean anadir(Pelicula pelicula) {
+	public boolean añadir(Pelicula pelicula) {
 		if (obtenerPelicula(pelicula) != null) return false;
 		ArrayList<Pelicula> mismoTitulo = obtenerPeliculasPorTitulo(pelicula.getTitulo());
 		if (mismoTitulo == null) {
@@ -33,10 +33,10 @@ public class ListaPeliculas {
 		return true;
 	}
 	
-	public boolean modificarAnio(Pelicula pelicula, int nuevoAnio) {
+	public boolean modificarAño(Pelicula pelicula, int nuevoaño) {
 		Pelicula almacenada = obtenerPelicula(pelicula);
 		if (almacenada == null) return false;
-		almacenada.setAnio(nuevoAnio);
+		almacenada.setAño(nuevoaño);
 		return true;
 	}
 	
@@ -49,7 +49,7 @@ public class ListaPeliculas {
 		return almacenada;
 	}
 	
-	public int tamanio() {
+	public int tamaño() {
 		int total = 0;
 		for (ArrayList<Pelicula> p: mapaPeliculas.values()) {
 			total += p.size();

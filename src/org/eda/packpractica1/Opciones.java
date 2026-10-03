@@ -1,0 +1,14 @@
+package org.eda.packpractica1;
+
+public enum Opciones {
+    CARGAR_FICHERO,
+    ENCONTRAR_ACTOR,
+    AÑADIR_ACTOR,
+    AÑADIR_PELICULA,
+    OBTENER_PELICULAS_DE_ACTOR,
+    OBTENER_ACTORES_DE_PELICULA,
+    CAMBIAR_AÑO_DE_PELICULA,
+    ELIMINAR_ACTOR,
+    GUARDAR_FICHERO,
+    ORDENAR
+}

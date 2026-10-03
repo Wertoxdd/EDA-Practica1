@@ -30,8 +30,16 @@ public class Actor implements Comparable<Actor>{
 		return this.id == id;
 	}	
 
-	public void eliminarPelicula(Pelicula pelicula) {
+	public boolean añadirPelicula(Pelicula pelicula){
+		if (this.peliculas.contains(pelicula)) return false;
+		this.peliculas.add(pelicula);
+		return true;
+	}
+
+	public boolean eliminarPelicula(Pelicula pelicula) {
+		if (!this.peliculas.contains(pelicula)) return false;
 		this.peliculas.remove(pelicula);
+		return true;
 	}
 	
 	public boolean participaEn(Pelicula pelicula) {

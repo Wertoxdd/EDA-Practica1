@@ -17,7 +17,25 @@ public class GestorFicheros {
     }
 
 
+    public void crearActorYPelicula(int actorId, String nombre, int peliculaId, String titulo, int año){
+        Actor temp = new Actor(nombre, actorId);
+        Actor actor = ListaActores.getListaActores().obtenerActor(temp);
+        if (actor == null){
+            ListaActores.getListaActores().añadirActor(temp);
+            actor = temp;
+        }
 
+        Pelicula temp2 = new Pelicula(titulo, año, peliculaId);
+        Pelicula pelicula = ListaPeliculas.getListaPeliculas().obtenerPelicula(temp2);
+        if (pelicula == null){
+            ListaPeliculas.getListaPeliculas().añadir(temp2);
+            pelicula = temp2;
+        }
+
+        actor.añadirPelicula(pelicula);
+        pelicula.añadirActor(actor);
+
+    }
 
     /*
     * Pre: el archivo existe con formato "url_actor ### nombre_actor ### url_pelicula ### titulo_pelicula", ademas todas las URL empiezan por Q y tienen 32 caracteres 
@@ -27,7 +45,7 @@ public class GestorFicheros {
             Scanner fichero = new Scanner (new FileReader(path));
             String linea = "";
             String[] datos;
-            int anio = Integer.parseInt(path.substring(path.length()-8, path.length()-4));
+            int año = Integer.parseInt(path.substring(path.length()-8, path.length()-4));
             
             while(fichero.hasNextLine()){
                 linea = fichero.nextLine();
@@ -40,41 +58,7 @@ public class GestorFicheros {
                 
                 if (("Q" + actorId).equals(datos[1])||("Q"+peliculaId).equals(datos[3])) continue;
 
-                ArrayList<Actor> actores = ListaActores.getListaActores().obtenerActoresPorNombre(datos[1]);
-                Actor actor = null;
-                
-                if (actores != null){
-                    for(Actor a: actores){
-                        if (a.tieneMismoId(actorId)){
-                            actor = a; 
-                            break;
-                        }
-                    }
-
-                }
-
-                if (actor == null){
-                    actor = new Actor (datos[1], actorId);
-                    ListaActores.getListaActores().anadirActor(actor);
-                }
-
-                ArrayList<Pelicula> peliculas = ListaPeliculas.getListaPeliculas().obtenerPeliculasPorTitulo(datos[3]);
-                Pelicula pelicula = null;
-
-                if (peliculas != null){
-                    for (Pelicula p: peliculas){
-                        if (p.tieneMismoId(peliculaId)){
-                            pelicula = p;
-                            break;
-                        }
-                    }
-                }
-
-                if (peliculas == null){
-                    pelicula = new Pelicula(datos[3], anio, peliculaId);
-                    ListaPeliculas.getListaPeliculas().anadir(pelicula);
-                }
-
+                crearActorYPelicula(actorId, datos[1], peliculaId, datos[3], año);
                 
             }
             fichero.close();
