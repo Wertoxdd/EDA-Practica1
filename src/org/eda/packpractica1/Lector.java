@@ -17,7 +17,11 @@ public class Lector {
 		return miLector;
 	}
 	
-	public int leerEntero(String mensaje) {
+	public int leerEntero() {
+		return Integer.parseInt(sc.nextLine());
+	}
+
+	public int leerEntero(String mensaje){
 		System.out.print(mensaje);
 		return Integer.parseInt(sc.nextLine());
 	}
