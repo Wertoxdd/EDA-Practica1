@@ -35,16 +35,6 @@ public class Actor implements Comparable<Actor>{
 		this.peliculas.add(pelicula);
 		return true;
 	}
-
-	public boolean eliminarPelicula(Pelicula pelicula) {
-		if (!this.peliculas.contains(pelicula)) return false;
-		this.peliculas.remove(pelicula);
-		return true;
-	}
-	
-	public boolean participaEn(Pelicula pelicula) {
-		return this.peliculas.contains(pelicula);
-	}
 	
 	@Override
 	public String toString() {

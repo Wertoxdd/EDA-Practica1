@@ -20,20 +20,12 @@ public class Pelicula {
 		return this.titulo;
 	}
 	
-	public int getAño(){
-		return this.año;
-	}
-	
 	public void setAño(int nuevoAño) {
 		this.año = nuevoAño;
 	}
 	
 	public int getId() {
 		return this.id;
-	}
-	
-	public boolean tieneMismoId(int id){
-		return this.id == id;
 	}
 
 	/*

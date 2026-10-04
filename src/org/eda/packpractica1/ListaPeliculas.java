@@ -39,16 +39,7 @@ public class ListaPeliculas {
 		almacenada.setAño(nuevoaño);
 		return true;
 	}
-	
-	public Pelicula eliminarPelicula(Pelicula pelicula) {
-		Pelicula almacenada = obtenerPelicula(pelicula);
-		if (almacenada == null) return null;
-		ArrayList<Pelicula> mismoTitulo = obtenerPeliculasPorTitulo(almacenada.getTitulo());
-		mismoTitulo.remove(almacenada);
-		if (mismoTitulo.isEmpty()) mapaPeliculas.remove(almacenada.getTitulo());
-		return almacenada;
-	}
-	
+
 	public int tamaño() {
 		int total = 0;
 		for (ArrayList<Pelicula> p: mapaPeliculas.values()) {

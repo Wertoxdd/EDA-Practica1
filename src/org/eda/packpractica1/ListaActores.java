@@ -40,13 +40,7 @@ public class ListaActores {
 		}
 		return null;
 	}
-	
-	/*
-	 * Pos: devuelve si el mapa contiene el id 
-	 */
-	public boolean existeNombre(String nombre) {
-		return mapaActores.containsKey(nombre);
-	}
+
 	
 	public int tamaño(){
 		int total = 0;
@@ -63,13 +57,7 @@ public class ListaActores {
 		return total;
 	}
 	
-	/*
-	 * Pos: devuelve si existe el actor o no en el mapa
-	 */
-	public boolean existe(Actor actor) {
-		return obtenerActor(actor) != null;
-	}
-	
+
 	/*
 	 * Pos: si el actor que se pasa como parametro es nulo no ocurre nada. Si no, obtiene la lista de los actores con mismo nombre.
 	 * Una vez obtenida la lista elimina al actor del ArrayList, y luego comprueba si el ArrayList queda vacio.
