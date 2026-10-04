@@ -157,21 +157,26 @@ public class Menu {
 
 	private static void guardar() {
 		String ruta = Lector.getLector().leerString("Fichero de salida: ").trim();
+
 		if (GestorFicheros.getGestorFicheros().guardarDatosEn(ruta)) System.out.println("Datos guardados.");
 		else System.out.println("No se han podido guardar los datos.");
 	}
 
 	private static void listaOrdenada() {
 		long inicio = System.nanoTime();
+
 		ArrayList<Actor>[] grupos = ListaActores.getListaActores().obtenerListaOrdenada();
+
 		long ms = (System.nanoTime() - inicio) / 1000000;
 		int mostrados = 0;
+
 		for (int i = 0; i < grupos.length && mostrados < 100; i++) { // se muestran los primeros 100 para no saturar la consola de VSCode
 			for (Actor a : grupos[i]) {
 				System.out.println(a);
 				mostrados++;
 			}
 		}
+		
 		System.out.println("(Lista ordenada en " + ms + " ms; se muestran los primeros)");
 	}
 }
