@@ -4,8 +4,12 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 
 public class GestorFicheros {
     private static GestorFicheros miGestor = null;
@@ -69,35 +73,40 @@ public class GestorFicheros {
     * Pre: el archivo existe con formato "url_actor ### nombre_actor ### url_pelicula ### titulo_pelicula", ademas todas las URL empiezan por Q y tienen 32 caracteres 
     */
     public boolean cargarElementosDe(String path){
-        try{
-            Scanner fichero = new Scanner (new FileReader(path));
-            String linea = "";
-            String[] datos;
-            int año = Integer.parseInt(path.substring(path.length()-8, path.length()-4));
-            
-            while(fichero.hasNextLine()){
-                linea = fichero.nextLine();
-                
-                if (linea.isEmpty()) continue;
-                
-                datos = linea.split("\\s###\\s");
-                int actorId = Integer.parseInt(datos[0].substring(32));
-                int peliculaId = Integer.parseInt(datos[2].substring(32));
-                
-                if (("Q" + actorId).equals(datos[1])||("Q"+peliculaId).equals(datos[3])) continue;
-
-                crearActorYPelicula(actorId, datos[1], peliculaId, datos[3], año);
-                
-            }
-
-            fichero.close();
-            return true;
-        }
-        
-        catch (IOException e) {
-                e.printStackTrace();
-            }
+        int año;
+        try {
+            año = Integer.parseInt(path.substring(path.length()-8, path.length()-4));
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            System.out.println("El nombre del fichero debe acabar en AAAA.txt: " + path);
             return false;
+        }
+
+        try (BufferedReader fichero = new BufferedReader(
+                new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))) {
+
+            String linea;
+            while ((linea = fichero.readLine()) != null){
+                if (linea.isEmpty()) continue;
+
+                try {
+                    String[] datos = linea.split("\\s###\\s");
+                    if (datos.length < 4) continue;
+
+                    int actorId = Integer.parseInt(datos[0].substring(32));
+                    int peliculaId = Integer.parseInt(datos[2].substring(32));
+
+                    if (("Q" + actorId).equals(datos[1]) || ("Q" + peliculaId).equals(datos[3])) continue;
+
+                    crearActorYPelicula(actorId, datos[1], peliculaId, datos[3], año);
+                } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                    // línea mal formada: se salta
+                }
+            }
+            return true;
+        } catch (IOException e) {
+            System.out.println("No se ha podido leer el fichero: " + path);
+            return false;
+        }
     }
 
     public boolean guardarDatosEn(String path){
