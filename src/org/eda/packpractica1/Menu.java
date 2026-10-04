@@ -19,7 +19,7 @@ public class Menu {
 				case 7: borrarActor(); break;
 				case 8: guardar(); break;
 				case 9: listaOrdenada(); break;
-				case 0: System.out.println("Hasta pronto."); break;
+				case 0: System.out.println("Hasta pronto!"); break;
 				default: System.out.println("Opción no válida.");
 			}
 		} while (opcion != 0);
@@ -45,10 +45,12 @@ public class Menu {
 	private static Actor elegirActor() {
 		String nombre = Lector.getLector().leerString("Nombre y apellido del actor/actriz: ").trim();
 		ArrayList<Actor> actores = ListaActores.getListaActores().obtenerActoresPorNombre(nombre);
+
 		if (actores == null) {
 			System.out.println("No existe ningún actor/actriz con ese nombre.");
 			return null;
 		}
+
 		if (actores.size() == 1) return actores.get(0);
 
 		for (int i = 0; i < actores.size(); i++) System.out.println("[" + i + "] " + actores.get(i));
@@ -57,6 +59,7 @@ public class Menu {
 			System.out.println("Posición no válida.");
 			return null;
 		}
+
 		return actores.get(pos);
 	}
 
@@ -68,6 +71,7 @@ public class Menu {
 			System.out.println("No existe ninguna película con ese título.");
 			return null;
 		}
+
 		if (peliculas.size() == 1) return peliculas.get(0);
 
 		for (int i = 0; i < peliculas.size(); i++) System.out.println("[" + i + "] " + peliculas.get(i));
@@ -76,6 +80,7 @@ public class Menu {
 			System.out.println("Posición no válida.");
 			return null;
 		}
+
 		return peliculas.get(pos);
 	}
 
@@ -84,6 +89,7 @@ public class Menu {
 		long inicio = System.nanoTime();
 		boolean ok = GestorFicheros.getGestorFicheros().cargarElementosDe(ruta);
 		long ms = (System.nanoTime() - inicio) / 1000000;
+
 		if (ok) System.out.println("Datos cargados en " + ms + " ms.");
 		else System.out.println("No se han podido cargar los datos.");
 	}
@@ -91,26 +97,32 @@ public class Menu {
 	private static void buscarActor() {
 		String nombre = Lector.getLector().leerString("Nombre y apellido del actor/actriz: ").trim();
 		ArrayList<Actor> actores = ListaActores.getListaActores().obtenerActoresPorNombre(nombre);
+
 		if (actores == null) {
 			System.out.println("No existe ningún actor/actriz con ese nombre.");
 			return;
 		}
+
 		for (Actor a : actores) System.out.println(a + " (" + a.getPeliculas().size() + " películas)");
 	}
 
 	private static void insertarActor() {
 		String nombre = Lector.getLector().leerString("Nombre y apellido del actor/actriz: ").trim();
+
 		if (nombre.isEmpty()) {
 			System.out.println("El nombre no puede estar vacío.");
 			return;
 		}
+
 		int id = Lector.getLector().leerEntero("Identificador (solo el número, sin la Q): ");
+
 		if (ListaActores.getListaActores().añadirActor(new Actor(nombre, id))) System.out.println("Actor añadido.");
 		else System.out.println("Ya existe un actor/actriz con ese nombre e identificador.");
 	}
 
 	private static void peliculasDeActor() {
 		Actor actor = elegirActor();
+
 		if (actor == null) return;
 		if (actor.getPeliculas().isEmpty()) System.out.println("No tiene películas.");
 		for (Pelicula p : actor.getPeliculas()) System.out.println(p);
@@ -120,12 +132,15 @@ public class Menu {
 		Pelicula pelicula = elegirPelicula();
 		if (pelicula == null) return;
 		if (pelicula.getActores().isEmpty()) System.out.println("No tiene actores.");
+
 		for (Actor a : pelicula.getActores()) System.out.println(a);
+
 	}
 
 	private static void modificarAño() {
 		Pelicula pelicula = elegirPelicula();
 		if (pelicula == null) return;
+
 		int año = Lector.getLector().leerEntero("Nuevo año de estreno: ");
 		if (ListaPeliculas.getListaPeliculas().modificarAño(pelicula, año)) System.out.println("Actualizada: " + pelicula);
 		else System.out.println("No se ha podido modificar.");
@@ -134,7 +149,9 @@ public class Menu {
 	private static void borrarActor() {
 		Actor actor = elegirActor();
 		if (actor == null) return;
+
 		if (ListaActores.getListaActores().eliminarActor(actor)) System.out.println("Actor/actriz borrado.");
+
 		else System.out.println("No se ha podido borrar.");
 	}
 
@@ -149,7 +166,7 @@ public class Menu {
 		ArrayList<Actor>[] grupos = ListaActores.getListaActores().obtenerListaOrdenada();
 		long ms = (System.nanoTime() - inicio) / 1000000;
 		int mostrados = 0;
-		for (int i = 0; i < grupos.length && mostrados < 20; i++) {
+		for (int i = 0; i < grupos.length && mostrados < 100; i++) { // se muestran los primeros 100 para no saturar la consola de VSCode
 			for (Actor a : grupos[i]) {
 				System.out.println(a);
 				mostrados++;
