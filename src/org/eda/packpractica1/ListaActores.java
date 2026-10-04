@@ -40,7 +40,7 @@ public class ListaActores {
 		}
 		return null;
 	}
-
+	
 	
 	public int tamaño(){
 		int total = 0;
