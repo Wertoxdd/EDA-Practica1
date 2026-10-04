@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.File;
 
 public class GestorFicheros {
     private static GestorFicheros miGestor = null;
@@ -36,6 +37,31 @@ public class GestorFicheros {
         pelicula.añadirActor(actor);
 
     }
+
+
+    public boolean cargarTodosLosElementosDe(String path){
+        File carpeta = new File(path);
+        File[] ficheros = carpeta.listFiles();
+
+        if (ficheros == null){
+            System.out.println("No se ha podido leer la carpeta.");
+            return false;
+        }
+
+        ArrayList<File> txts = new ArrayList<>();
+        for (File f: ficheros){
+            if (f.isFile() && f.getName().endsWith(".txt")){
+                txts.add(f);
+            }
+        }
+
+        for (File f: txts){
+            cargarElementosDe(f.getPath());
+        }
+
+        return !txts.isEmpty();
+    }
+
 
     /*
     * Pre: el archivo existe con formato "url_actor ### nombre_actor ### url_pelicula ### titulo_pelicula", ademas todas las URL empiezan por Q y tienen 32 caracteres 

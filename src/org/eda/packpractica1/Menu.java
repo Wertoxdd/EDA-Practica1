@@ -19,6 +19,7 @@ public class Menu {
 				case 7: borrarActor(); break;
 				case 8: guardar(); break;
 				case 9: listaOrdenada(); break;
+				case 10: cargarTodosLosFicheros(); break;
 				case 0: System.out.println("Hasta pronto!"); break;
 				default: System.out.println("Opción no válida.");
 			}
@@ -37,6 +38,7 @@ public class Menu {
 		System.out.println(" 7. Borrar un actor/actriz");
 		System.out.println(" 8. Guardar la lista en un fichero");
 		System.out.println(" 9. Lista de actores ordenada");
+		System.out.println("10. Cargar TODOS los ficheros");
 		System.out.println(" 0. Salir");
 		System.out.println("===========================================");
 	}
@@ -176,7 +178,17 @@ public class Menu {
 				mostrados++;
 			}
 		}
-		
+
 		System.out.println("(Lista ordenada en " + ms + " ms; se muestran los primeros)");
+	}
+
+	private static void cargarTodosLosFicheros(){
+		String path = Lector.getLector().leerString("Introduce la ruta de la carpeta: ");
+		long inicio = System.nanoTime();		
+		boolean ok = GestorFicheros.getGestorFicheros().cargarTodosLosElementosDe(path);
+		long ms = (System.nanoTime()-inicio) / 1000000;
+		
+		if (ok) System.out.println("Carga: " + ms + " ms.");
+		else System.out.println("No se han podido cargar todos los ficheros.");
 	}
 }
