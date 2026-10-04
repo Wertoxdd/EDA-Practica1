@@ -66,6 +66,7 @@ public class Actor implements Comparable<Actor>{
 		return Objects.hash(this.id);
 	}
 	
+	@Override
 	public int compareTo(Actor actor) {
 		return this.nombre.compareTo(actor.getNombre());
 	}

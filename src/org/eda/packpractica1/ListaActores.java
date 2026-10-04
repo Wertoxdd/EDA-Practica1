@@ -1,10 +1,8 @@
 package org.eda.packpractica1;
 
-import java.util.HashMap;
-import java.util.ArrayList;
 import java.io.PrintWriter;
-
-// FALTA MANEJAR LOS ACTORES CON LAS PELICULAS
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ListaActores {
 	private HashMap<String, ArrayList<Actor>> mapaActores;
@@ -50,6 +48,20 @@ public class ListaActores {
 		return mapaActores.containsKey(nombre);
 	}
 	
+	public int tamaño(){
+		int total = 0;
+		for (ArrayList<Actor> actores: mapaActores.values()) total += actores.size();
+		return total;
+	}
+
+	public int contarRelaciones(){
+		int total = 0;
+		for (ArrayList<Actor> actores: mapaActores.values()){
+			for (Actor a: actores) total += a.getPeliculas().size();
+		}
+		
+		return total;
+	}
 	
 	/*
 	 * Pos: devuelve si existe el actor o no en el mapa
@@ -89,16 +101,18 @@ public class ListaActores {
 		return true;
 	}
 	
-	public void escribirEnDirectorioCon(PrintWriter editor){
-		for (ArrayList<Actor> actores: mapaActores.values()){
-			for (Actor a: actores){
-				editor.println(a);
-				for (Pelicula p: a.getPeliculas()){
-					editor.println("\t" + p);
-				}
-			}
+	public void escribirEnFicheroCon(PrintWriter editor){
+    	String url = "http://www.wikidata.org/entity/Q";
+    	for (ArrayList<Actor> actores: mapaActores.values()){
+        	for (Actor a: actores){
+            	for (Pelicula p: a.getPeliculas()){
+                	editor.println(url + a.getId() + " ### " + a.getNombre()
+                    	    + " ### " + url + p.getId() + " ### " + p.getTitulo());
+            	}
+        	}
 		}
 	}
+
 
 	public ArrayList<Actor>[] obtenerListaOrdenada(){
 		ArrayList<Actor>[] temp = new ArrayList [mapaActores.size()];
@@ -148,6 +162,10 @@ public class ListaActores {
 		for (i = inicio; i <= fin; i++) {
 			valores[i] = temp[i];
 		}
+	}
+
+	public void reset() {
+    	mapaActores.clear();
 	}
 	
 }

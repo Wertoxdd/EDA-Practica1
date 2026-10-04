@@ -40,9 +40,11 @@ public class GestorFicheros {
 
 
     public boolean cargarTodosLosElementosDe(String path){
-        File carpeta = new File(path);
-        File[] ficheros = carpeta.listFiles();
+    return cargarTodosLosElementosDe(path, Integer.MAX_VALUE);
+}
 
+    public boolean cargarTodosLosElementosDe(String path, int maxFicheros){
+        File[] ficheros = new File(path).listFiles();
         if (ficheros == null){
             System.out.println("No se ha podido leer la carpeta.");
             return false;
@@ -50,16 +52,16 @@ public class GestorFicheros {
 
         ArrayList<File> txts = new ArrayList<>();
         for (File f: ficheros){
-            if (f.isFile() && f.getName().endsWith(".txt")){
-                txts.add(f);
-            }
+            if (f.isFile() && f.getName().endsWith(".txt")) txts.add(f);
         }
+        txts.sort((a, b) -> a.getName().compareTo(b.getName()));
 
+        int cargados = 0;
         for (File f: txts){
-            cargarElementosDe(f.getPath());
+            if (cargados >= maxFicheros) break;
+            if (cargarElementosDe(f.getPath())) cargados++;
         }
-
-        return !txts.isEmpty();
+        return cargados > 0;
     }
 
 
@@ -87,6 +89,7 @@ public class GestorFicheros {
                 crearActorYPelicula(actorId, datos[1], peliculaId, datos[3], año);
                 
             }
+
             fichero.close();
             return true;
         }
@@ -100,7 +103,7 @@ public class GestorFicheros {
     public boolean guardarDatosEn(String path){
         try {
             PrintWriter editor = new PrintWriter(path, "UTF-8");
-            ListaActores.getListaActores().escribirEnDirectorioCon(editor);
+            ListaActores.getListaActores().escribirEnFicheroCon(editor);
             editor.close();
             return true;
         }

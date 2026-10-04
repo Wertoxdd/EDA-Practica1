@@ -20,6 +20,7 @@ public class Menu {
 				case 8: guardar(); break;
 				case 9: listaOrdenada(); break;
 				case 10: cargarTodosLosFicheros(); break;
+				case 11: pruebasDeEficiencia(); break;
 				case 0: System.out.println("Hasta pronto!"); break;
 				default: System.out.println("Opción no válida.");
 			}
@@ -39,11 +40,11 @@ public class Menu {
 		System.out.println(" 8. Guardar la lista en un fichero");
 		System.out.println(" 9. Lista de actores ordenada");
 		System.out.println("10. Cargar TODOS los ficheros");
+		System.out.println("11. PRUEBA DE EFICIENCIA");
 		System.out.println(" 0. Salir");
 		System.out.println("===========================================");
 	}
 
-	// Pide un nombre y devuelve el actor elegido (o null). Si hay homónimos, se elige por posición.
 	private static Actor elegirActor() {
 		String nombre = Lector.getLector().leerString("Nombre y apellido del actor/actriz: ").trim();
 		ArrayList<Actor> actores = ListaActores.getListaActores().obtenerActoresPorNombre(nombre);
@@ -65,7 +66,6 @@ public class Menu {
 		return actores.get(pos);
 	}
 
-	// Igual que elegirActor, pero con películas.
 	private static Pelicula elegirPelicula() {
 		String titulo = Lector.getLector().leerString("Título de la película: ").trim();
 		ArrayList<Pelicula> peliculas = ListaPeliculas.getListaPeliculas().obtenerPeliculasPorTitulo(titulo);
@@ -87,17 +87,19 @@ public class Menu {
 	}
 
 	private static void cargar() {
-		String ruta = Lector.getLector().leerString("Ruta del fichero: ").trim();
+		String ruta = Lector.getLector().leerString("Ruta del fichero: ");
 		long inicio = System.nanoTime();
 		boolean ok = GestorFicheros.getGestorFicheros().cargarElementosDe(ruta);
 		long ms = (System.nanoTime() - inicio) / 1000000;
+
+		mostrarDatos();
 
 		if (ok) System.out.println("Datos cargados en " + ms + " ms.");
 		else System.out.println("No se han podido cargar los datos.");
 	}
 
 	private static void buscarActor() {
-		String nombre = Lector.getLector().leerString("Nombre y apellido del actor/actriz: ").trim();
+		String nombre = Lector.getLector().leerString("Nombre y apellido del actor/actriz: ");
 		ArrayList<Actor> actores = ListaActores.getListaActores().obtenerActoresPorNombre(nombre);
 
 		if (actores == null) {
@@ -109,7 +111,7 @@ public class Menu {
 	}
 
 	private static void insertarActor() {
-		String nombre = Lector.getLector().leerString("Nombre y apellido del actor/actriz: ").trim();
+		String nombre = Lector.getLector().leerString("Nombre y apellido del actor/actriz: ");
 
 		if (nombre.isEmpty()) {
 			System.out.println("El nombre no puede estar vacío.");
@@ -158,7 +160,7 @@ public class Menu {
 	}
 
 	private static void guardar() {
-		String ruta = Lector.getLector().leerString("Fichero de salida: ").trim();
+		String ruta = Lector.getLector().leerString("Fichero de salida: ");
 
 		if (GestorFicheros.getGestorFicheros().guardarDatosEn(ruta)) System.out.println("Datos guardados.");
 		else System.out.println("No se han podido guardar los datos.");
@@ -187,8 +189,52 @@ public class Menu {
 		long inicio = System.nanoTime();		
 		boolean ok = GestorFicheros.getGestorFicheros().cargarTodosLosElementosDe(path);
 		long ms = (System.nanoTime()-inicio) / 1000000;
-		
+
+		mostrarDatos();
+
 		if (ok) System.out.println("Carga: " + ms + " ms.");
 		else System.out.println("No se han podido cargar todos los ficheros.");
+	}
+
+	private static void mostrarDatos(){
+		System.out.println("Actores: " + ListaActores.getListaActores().tamaño());
+		System.out.println("Peliculas: " + ListaPeliculas.getListaPeliculas().tamaño());
+		System.out.println("Relaciones: " + ListaActores.getListaActores().contarRelaciones());
+	}
+
+	private static void pruebasDeEficiencia() {
+		String carpeta = Lector.getLector().leerString("Ruta de la carpeta (fichero grande): ").trim();
+		String pequeno = Lector.getLector().leerString("Ruta de un fichero pequeno (AAAA.txt): ").trim();
+		ListaActores la = ListaActores.getListaActores();
+		GestorFicheros gf = GestorFicheros.getGestorFicheros();
+
+		// Carga con el fichero pequeño
+		la.reset();
+		ListaPeliculas.getListaPeliculas().reset();
+		long inicio = System.nanoTime();
+		gf.cargarElementosDe(pequeno);
+		System.out.println("Carga fichero pequeno: " + (System.nanoTime() - inicio) / 1000000 + " ms");
+		mostrarDatos();
+
+		// Carga con todos los ficheros
+		la.reset();
+		ListaPeliculas.getListaPeliculas().reset();
+		inicio = System.nanoTime();
+		gf.cargarTodosLosElementosDe(carpeta);
+		System.out.println("Carga fichero grande: " + (System.nanoTime() - inicio) / 1000000 + " ms");
+		mostrarDatos();
+
+		// Busqueda de un actor
+		int encontrados = 0;
+		inicio = System.nanoTime();
+		for (int i = 0; i < 100000; i++) {
+			if (la.obtenerActoresPorNombre("Adrien Brody") != null) encontrados++;
+		}
+		System.out.println("Busqueda: " + (System.nanoTime() - inicio) / 100000 + " ns (encontrados: " + encontrados + ")");
+
+		// Ordenado
+		inicio = System.nanoTime();
+		la.obtenerListaOrdenada();
+		System.out.println("Ordenado: " + (System.nanoTime() - inicio) / 1000000 + " ms");
 	}
 }

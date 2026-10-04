@@ -66,4 +66,8 @@ public class ListaPeliculas {
 		return null;
 	}
 	
+	public void reset() {
+    	mapaPeliculas.clear();
+	}
+
 }
