@@ -68,7 +68,10 @@ public class ListaActores {
 		if (actorTemp == null) return false;
 		ArrayList<Actor> listaMismoNombre = obtenerActoresPorNombre(actorTemp.getNombre());
 		listaMismoNombre.remove(actorTemp);
-		if (listaMismoNombre.isEmpty()) mapaActores.remove(listaMismoNombre);
+		if (listaMismoNombre.isEmpty()) mapaActores.remove(actorTemp.getNombre());
+		for (Pelicula p: actorTemp.getPeliculas()){
+			p.eliminarActor(actorTemp);
+		}
 		return true;
 	}
 	
